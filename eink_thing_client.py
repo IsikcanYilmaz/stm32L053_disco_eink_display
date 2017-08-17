@@ -2,7 +2,7 @@
 #
 
 import Tkinter as tk
-import tkFileDialog
+import tkFileDialog, tkMessageBox
 import io
 import serial
 import traceback
@@ -117,12 +117,17 @@ class EinkThingClient(tk.Frame):
     def transfer(self): # TRANSFER IMAGE THROUGH UART
         self.recreatedImage.save("/tmp/recreated.jpg")
         self.compressedByteArray = self.compress(self.recreatedImage)
+        return # TODO remove
         try:
+            tkMessageBox.showinfo("do it", "Press the USER BUTTON on the stm disco")
             port = serial.Serial(PORT, baudrate=BAUD, timeout=3.0)
-            # TODO # transfer bytes here
+            for b in self.compressedByteArray:
+                port.write(b)
         except Exception:
             traceback.print_exc()
             print "ERROR TRANSFERING"
+        finally:
+            port.close()
         print "TRANSFER"
 
     def thresholdChange(self, *args): # SLIDER SLIDED CALLBACK
