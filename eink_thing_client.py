@@ -4,8 +4,12 @@
 import Tkinter as tk
 import tkFileDialog
 import io
+import serial
+import traceback
 from PIL import Image, ImageTk
 
+BAUD=9600
+PORT=""
 
 class EinkThingClient(tk.Frame):
     def __init__(self, parent):
@@ -107,13 +111,18 @@ class EinkThingClient(tk.Frame):
             (int(origBytes[pixIdx + 5] > 0) << 5) |\
             (int(origBytes[pixIdx + 6] > 0) << 6) |\
             (int(origBytes[pixIdx + 7] > 0) << 7))
-            print bin(byteArray[-1])
-
+            print bin(byteArray[-1]), hex(byteArray[-1])
         return byteArray
 
     def transfer(self): # TRANSFER IMAGE THROUGH UART
         self.recreatedImage.save("/tmp/recreated.jpg")
         self.compressedByteArray = self.compress(self.recreatedImage)
+        try:
+            port = serial.Serial(PORT, baudrate=BAUD, timeout=3.0)
+            # TODO # transfer bytes here
+        except Exception:
+            traceback.print_exc()
+            print "ERROR TRANSFERING"
         print "TRANSFER"
 
     def thresholdChange(self, *args): # SLIDER SLIDED CALLBACK
