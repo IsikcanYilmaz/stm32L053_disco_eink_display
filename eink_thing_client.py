@@ -6,10 +6,11 @@ import tkFileDialog, tkMessageBox
 import io
 import serial
 import traceback
+import time
 from PIL import Image, ImageTk
 
 BAUD=9600
-PORT=""
+PORT="COM4"
 
 class EinkThingClient(tk.Frame):
     def __init__(self, parent):
@@ -66,7 +67,7 @@ class EinkThingClient(tk.Frame):
             #self.loadedImage.thumbnail((172, 72)) # Scale down and keep aspect ratio # optionally add ANTIALIAS
             self.loadedImage = self.loadedImage.resize((172, 72)) # Scale down # optionally add ANTIALIAS
             self.topCanvasPhoto = ImageTk.PhotoImage(self.loadedImage)
-            self.loadedImage.save("/tmp/tmpresized.jpg")
+            #self.loadedImage.save("/tmp/tmpresized.jpg")
             self.recreatedImage = self.convert(self.loadedImage)
             imgx = self.loadedImage.size[0]
             imgy = self.loadedImage.size[1]
@@ -111,18 +112,35 @@ class EinkThingClient(tk.Frame):
             (int(origBytes[pixIdx + 5] > 0) << 5) |\
             (int(origBytes[pixIdx + 6] > 0) << 6) |\
             (int(origBytes[pixIdx + 7] > 0) << 7))
-            print bin(byteArray[-1]), hex(byteArray[-1])
+            #print bin(byteArray[-1]), hex(byteArray[-1])
+        print "COMPRESSED SIZE", len(byteArray)
         return byteArray
 
     def transfer(self): # TRANSFER IMAGE THROUGH UART
-        self.recreatedImage.save("/tmp/recreated.jpg")
+        #self.recreatedImage.save("/tmp/recreated.jpg")
         self.compressedByteArray = self.compress(self.recreatedImage)
-        return # TODO remove
+        #return
+        port = serial.Serial(PORT, baudrate=BAUD, timeout=10, write_timeout=0)
         try:
             tkMessageBox.showinfo("do it", "Press the USER BUTTON on the stm disco")
-            port = serial.Serial(PORT, baudrate=BAUD, timeout=3.0)
-            for b in self.compressedByteArray:
-                port.write(b)
+            for bIdx in range(0,len(self.compressedByteArray)):
+                b0 = self.compressedByteArray[bIdx+0]
+                #b1 = self.compressedByteArray[bIdx+1]
+                #b2 = self.compressedByteArray[bIdx+2]
+                #b3 = self.compressedByteArray[bIdx+3]
+                #b4 = self.compressedByteArray[bIdx+4]
+                #b5 = self.compressedByteArray[bIdx+5]
+                #b6 = self.compressedByteArray[bIdx+6]
+                #b7 = self.compressedByteArray[bIdx+7]
+                #b8 = self.compressedByteArray[bIdx+8]
+                #b9 = self.compressedByteArray[bIdx+9]
+                #payload = chr(b0)+chr(b1)+chr(b2)+chr(b3)+chr(b4)+\
+                #          chr(b5)+chr(b6)+chr(b7)+chr(b8)+chr(b9)
+                payload = chr(b0)
+                print "WRITING BYTES IDX:", bIdx+0, " ", bIdx+9, " ", payload
+                port.write(payload)
+                #time.sleep(5)
+                print bIdx+9, "/", len(self.compressedByteArray)
         except Exception:
             traceback.print_exc()
             print "ERROR TRANSFERING"
