@@ -247,7 +247,7 @@
 
   <Group>
     <GroupName>Application/User</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -255,7 +255,7 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>../Src/stm32l0xx_hal_msp.c</PathWithFileName>
@@ -539,7 +539,7 @@
 
   <Group>
     <GroupName>Application/MDK-ARM</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -694,7 +694,7 @@
   </Group>
 
   <Group>
-    <GroupName>EPD</GroupName>
+    <GroupName>BSP</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -706,8 +706,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c</PathWithFileName>
-      <FilenameWithoutPath>stm32l0538_discovery.c</FilenameWithoutPath>
+      <PathWithFileName>..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery_epd.c</PathWithFileName>
+      <FilenameWithoutPath>stm32l0538_discovery_epd.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -718,8 +718,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery_epd.c</PathWithFileName>
-      <FilenameWithoutPath>stm32l0538_discovery_epd.c</FilenameWithoutPath>
+      <PathWithFileName>..\Drivers\BSP\Components\gde021a1\gde021a1.c</PathWithFileName>
+      <FilenameWithoutPath>gde021a1.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -727,11 +727,11 @@
       <GroupNumber>6</GroupNumber>
       <FileNumber>37</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Drivers\BSP\Components\gde021a1\gde021a1.c</PathWithFileName>
-      <FilenameWithoutPath>gde021a1.c</FilenameWithoutPath>
+      <PathWithFileName>..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c</PathWithFileName>
+      <FilenameWithoutPath>stm32l0538_discovery.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -739,7 +739,7 @@
 
   <Group>
     <GroupName>::Board Support</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>

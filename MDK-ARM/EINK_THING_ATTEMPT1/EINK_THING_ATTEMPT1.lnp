@@ -33,6 +33,9 @@
 "eink_thing_attempt1\croutine.o"
 "eink_thing_attempt1\timers.o"
 "eink_thing_attempt1\event_groups.o"
+"eink_thing_attempt1\stm32l0538_discovery_epd.o"
+"eink_thing_attempt1\gde021a1.o"
+"eink_thing_attempt1\stm32l0538_discovery.o"
 "eink_thing_attempt1\led_stm32l053-discovery.o"
 --library_type=microlib --strict --scatter "EINK_THING_ATTEMPT1\EINK_THING_ATTEMPT1.sct"
 --diag_suppress=L6329 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

@@ -109,7 +109,7 @@ typedef enum
 #define LED4_GPIO_CLK_ENABLE()                  __GPIOA_CLK_ENABLE()
 #define LED4_GPIO_CLK_DISABLE()                 __GPIOA_CLK_DISABLE()
 
-#define LEDx_GPIO_CLK_ENABLE(__INDEX__)         (((__INDEX__) == 0) ? LED3_GPIO_CLK_ENABLE() : LED4_GPIO_CLK_ENABLE())
+#define LEDx_GPIO_CLK_ENABLE(__INDEX__)         //(((__INDEX__) == 0) ? LED3_GPIO_CLK_ENABLE() : LED4_GPIO_CLK_ENABLE()) // JON WORKAROUND
 #define LEDx_GPIO_CLK_DISABLE(__INDEX__)        (((__INDEX__) == 0) ? LED3_GPIO_CLK_DISABLE() : LED4_GPIO_CLK_DISABLE())
 /**
   * @}
@@ -130,7 +130,7 @@ typedef enum
 #define KEY_BUTTON_EXTI_LINE                    GPIO_PIN_0
 #define KEY_BUTTON_EXTI_IRQn                    EXTI0_1_IRQn
 
-#define BUTTONx_GPIO_CLK_ENABLE(__INDEX__)      (KEY_BUTTON_GPIO_CLK_ENABLE())
+#define BUTTONx_GPIO_CLK_ENABLE(__INDEX__)      //(KEY_BUTTON_GPIO_CLK_ENABLE()) // JON WORKAROUND
 #define BUTTONx_GPIO_CLK_DISABLE(__INDEX__)     (KEY_BUTTON_GPIO_CLK_DISABLE())
 /**
   * @}

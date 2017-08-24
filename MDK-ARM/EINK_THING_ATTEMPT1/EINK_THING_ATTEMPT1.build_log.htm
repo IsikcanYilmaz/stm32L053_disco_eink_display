@@ -21,70 +21,53 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.1.0
 Dialog DLL:      TARMCM1.DLL V1.13.0.0
  
 <h2>Project:</h2>
-C:\Users\JON\Desktop\EINK_THING_ATTEMPT1\MDK-ARM\EINK_THING_ATTEMPT1.uvprojx
-Project File Date:  08/20/2017
+\\vmware-host\Shared Folders\win10_shared_folder\stm32l053_disco_eink_display_practice\MDK-ARM\EINK_THING_ATTEMPT1.uvprojx
+Project File Date:  08/24/2017
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'EINK_THING_ATTEMPT1'
+compiling stm32l0xx_hal_msp.c...
+compiling stm32l0xx_hal_timebase_TIM.c...
+compiling main.c...
+../Src/main.c(313): warning:  #177-D: variable "pData"  was declared but never referenced
+        char *pData = "ABCDEFGHI\n\b";
+../Src/main.c(314): warning:  #177-D: variable "test"  was declared but never referenced
+        char test[100];
+../Src/main.c: 2 warnings, 0 errors
+compiling freertos.c...
+compiling stm32l0xx_hal_pwr_ex.c...
+compiling stm32l0xx_hal_pwr.c...
+compiling stm32l0xx_hal_tim_ex.c...
+compiling stm32l0xx_hal_rcc_ex.c...
+compiling stm32l0xx_hal_dma.c...
+compiling stm32l0xx_hal_flash_ramfunc.c...
+compiling stm32l0xx_hal_tim.c...
+compiling stm32l0xx_hal_uart_ex.c...
+compiling stm32l0xx_hal_flash_ex.c...
+compiling stm32l0xx_hal_gpio.c...
+compiling stm32l0xx_hal_i2c_ex.c...
+compiling stm32l0xx_hal_rcc.c...
+compiling stm32l0xx_hal_flash.c...
+compiling stm32l0xx_hal_cortex.c...
+compiling stm32l0xx_hal_i2c.c...
+assembling startup_stm32l053xx.s...
+compiling system_stm32l0xx.c...
+compiling heap_4.c...
+compiling port.c...
+compiling tasks.c...
+compiling queue.c...
+compiling list.c...
+compiling croutine.c...
+compiling timers.c...
+compiling event_groups.c...
+compiling stm32l0538_discovery_epd.c...
+compiling gde021a1.c...
 compiling stm32l0538_discovery.c...
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(103): error:  #20: identifier "SPI_HandleTypeDef" is undefined
-  static SPI_HandleTypeDef SpiHandle;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(115): error:  #20: identifier "SPI_HandleTypeDef" is undefined
-  static void               SPIx_MspInit(SPI_HandleTypeDef *hspi);
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(154): error:  #29: expected an expression
-    
-EDx_GPIO_CLK_ENABLE(Led);
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(154): error:  #53: expected a ":"
-    
-EDx_GPIO_CLK_ENABLE(Led);
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(222): error:  #29: expected an expression
-    
-UTTONx_GPIO_CLK_ENABLE(Button);
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(271): warning:  #223-D: function "HAL_SPI_GetState" declared implicitly
-    if(HAL_SPI_GetState(&SpiHandle) == HAL_SPI_STATE_RESET)
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(271): error:  #20: identifier "HAL_SPI_STATE_RESET" is undefined
-    if(HAL_SPI_GetState(&SpiHandle) == HAL_SPI_STATE_RESET)
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(279): error:  #20: identifier "SPI_MODE_MASTER" is undefined
-      SpiHandle.Init.Mode               = SPI_MODE_MASTER;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(280): error:  #20: identifier "SPI_DIRECTION_2LINES" is undefined
-      SpiHandle.Init.Direction          = SPI_DIRECTION_2LINES;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(281): error:  #20: identifier "SPI_BAUDRATEPRESCALER_8" is undefined
-      SpiHandle.Init.BaudRatePrescaler  = SPI_BAUDRATEPRESCALER_8;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(282): error:  #20: identifier "SPI_DATASIZE_8BIT" is undefined
-      SpiHandle.Init.DataSize           = SPI_DATASIZE_8BIT;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(283): error:  #20: identifier "SPI_PHASE_2EDGE" is undefined
-      SpiHandle.Init.CLKPhase           = SPI_PHASE_2EDGE;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(284): error:  #20: identifier "SPI_POLARITY_HIGH" is undefined
-      SpiHandle.Init.CLKPolarity        = SPI_POLARITY_HIGH;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(285): error:  #20: identifier "SPI_FIRSTBIT_MSB" is undefined
-      SpiHandle.Init.FirstBit           = SPI_FIRSTBIT_MSB;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(286): error:  #20: identifier "SPI_NSS_SOFT" is undefined
-      SpiHandle.Init.NSS                = SPI_NSS_SOFT;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(287): error:  #20: identifier "SPI_CRCCALCULATION_DISABLE" is undefined
-      SpiHandle.Init.CRCCalculation     = 
-PI_CRCCALCULATION_DISABLED;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(289): error:  #20: identifier "SPI_TIMODE_DISABLE" is undefined
-      SpiHandle.Init.TIMode             = 
-PI_TIMODE_DISABLED;
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(292): warning:  #223-D: function "HAL_SPI_Init" declared implicitly
-      HAL_SPI_Init(&SpiHandle);
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(307): warning:  #223-D: function "HAL_SPI_TransmitReceive" declared implicitly
-    status = HAL_SPI_TransmitReceive(&SpiHandle, (uint8_t*) &writevalue, (uint8_t*) &readvalue, 1, SPIx_TIMEOUT_MAX);
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(307): warning:  #188-D: enumerated type mixed with another type
-    status = HAL_SPI_TransmitReceive(&SpiHandle, (uint8_t*) &writevalue, (uint8_t*) &readvalue, 1, 
-PIx_TIMEOUT_MAX);
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(328): warning:  #223-D: function "HAL_SPI_Transmit" declared implicitly
-    status = HAL_SPI_Transmit(&SpiHandle, (uint8_t*) &Value, 1, SPIx_TIMEOUT_MAX);
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(328): warning:  #188-D: enumerated type mixed with another type
-    status = HAL_SPI_Transmit(&SpiHandle, (uint8_t*) &Value, 1, 
-PIx_TIMEOUT_MAX);
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(346): warning:  #223-D: function "HAL_SPI_DeInit" declared implicitly
-    HAL_SPI_DeInit(&SpiHandle);
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c(357): error:  #20: identifier "SPI_HandleTypeDef" is undefined
-  static void SPIx_MspInit(SPI_HandleTypeDef *hspi)
-..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c: 7 warnings, 17 errors
-"EINK_THING_ATTEMPT1\EINK_THING_ATTEMPT1.axf" - 17 Error(s), 7 Warning(s).
+compiling LED_STM32L053-Discovery.c...
+linking...
+Program Size: Code=9516 RO-data=300 RW-data=108 ZI-data=6052  
+"EINK_THING_ATTEMPT1\EINK_THING_ATTEMPT1.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -121,8 +104,7 @@ Package Vendor: Keil
 
    * Component: ::Board Support:LED:1.0.0 (API)
       Include file:  Board\Board_LED.h
-Target not created.
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:36
 </pre>
 </body>
 </html>

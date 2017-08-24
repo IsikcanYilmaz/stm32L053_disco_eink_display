@@ -27,6 +27,7 @@ eink_thing_attempt1\stm32l0xx_hal_flash_ex.o: ../Drivers/STM32L0xx_HAL_Driver/In
 eink_thing_attempt1\stm32l0xx_hal_flash_ex.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_i2c_ex.h
 eink_thing_attempt1\stm32l0xx_hal_flash_ex.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pwr.h
 eink_thing_attempt1\stm32l0xx_hal_flash_ex.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pwr_ex.h
+eink_thing_attempt1\stm32l0xx_hal_flash_ex.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_spi.h
 eink_thing_attempt1\stm32l0xx_hal_flash_ex.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_tim.h
 eink_thing_attempt1\stm32l0xx_hal_flash_ex.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_tim_ex.h
 eink_thing_attempt1\stm32l0xx_hal_flash_ex.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_uart.h

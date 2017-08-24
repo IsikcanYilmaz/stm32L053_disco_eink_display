@@ -623,13 +623,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>EPD</GroupName>
+          <GroupName>BSP</GroupName>
           <Files>
-            <File>
-              <FileName>stm32l0538_discovery.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c</FilePath>
-            </File>
             <File>
               <FileName>stm32l0538_discovery_epd.c</FileName>
               <FileType>1</FileType>
@@ -639,6 +634,11 @@
               <FileName>gde021a1.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\BSP\Components\gde021a1\gde021a1.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0538_discovery.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery.c</FilePath>
             </File>
           </Files>
         </Group>
