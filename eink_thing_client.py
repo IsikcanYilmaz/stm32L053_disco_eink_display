@@ -113,19 +113,19 @@ class EinkThingClient(tk.Frame):
         width = img.size[0]
         height= img.size[1]
         print width, height
-        sys.exit() # TODO
-        origBytes = list(img.getdata())
-        for pixIdx in range(0, len(origBytes), 8):
-            byteArray.append(\
-            (int(origBytes[pixIdx + 0] > 0) << 0) |\
-            (int(origBytes[pixIdx + 1] > 0) << 1) |\
-            (int(origBytes[pixIdx + 2] > 0) << 2) |\
-            (int(origBytes[pixIdx + 3] > 0) << 3) |\
-            (int(origBytes[pixIdx + 4] > 0) << 4) |\
-            (int(origBytes[pixIdx + 5] > 0) << 5) |\
-            (int(origBytes[pixIdx + 6] > 0) << 6) |\
-            (int(origBytes[pixIdx + 7] > 0) << 7))
-            #print bin(byteArray[-1]), hex(byteArray[-1])
+        for i in range(0, width):
+            for j in range(height, 0, -8):
+                byteArray.append(\
+                    (int(img.getpixel((i,j-1)) > 0) << 0) |\
+                    (int(img.getpixel((i,j-2)) > 0) << 1) |\
+                    (int(img.getpixel((i,j-3)) > 0) << 2) |\
+                    (int(img.getpixel((i,j-4)) > 0) << 3) |\
+                    (int(img.getpixel((i,j-5)) > 0) << 4) |\
+                    (int(img.getpixel((i,j-6)) > 0) << 5) |\
+                    (int(img.getpixel((i,j-7)) > 0) << 6) |\
+                    (int(img.getpixel((i,j-8)) > 0) << 7))
+                byteArray[-1] = 0xff - byteArray[-1] # the epd flips the colors. so flip bits
+        print byteArray
         print "COMPRESSED SIZE", len(byteArray)
         return byteArray
 
