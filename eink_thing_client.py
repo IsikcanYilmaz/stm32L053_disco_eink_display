@@ -1,13 +1,15 @@
 #!/usr/local/bin/python
 #
 
-import Tkinter as tk
 import tkFileDialog, tkMessageBox
 import io
 import serial
 import traceback
 import time
+import sys
+import test_pictures
 from PIL import Image, ImageTk
+import Tkinter as tk
 
 BAUD=9600
 PORT="COM4"
@@ -42,9 +44,11 @@ class EinkThingClient(tk.Frame):
         self.slider = tk.Scale(self.frame3, from_=0, to=255, orient=tk.HORIZONTAL, variable=self.threshold)
         self.browseButton = tk.Button(self.frame3, text="Browse", command=self.browseImage)
         self.transferButton = tk.Button(self.frame3, text="Transfer", command=self.transfer)
+        self.testButton = tk.Button(self.frame3, text="Test Pic", command=self.test)
         self.slider.pack(fill=tk.BOTH, expand=True)
         self.browseButton.pack(fill=tk.BOTH, expand=True)
         self.transferButton.pack(fill=tk.BOTH, expand=True)
+        self.testButton.pack(fill=tk.BOTH, expand=True)
         self.slider.configure(state="disabled")
         self.transferButton.configure(state="disabled")
 
@@ -58,6 +62,11 @@ class EinkThingClient(tk.Frame):
         self.frame3.pack(fill=tk.BOTH, expand=True)
         tk.Frame(self, bg='black').pack(fill=tk.BOTH, ipady=1) # Separator
         self.pack(fill=tk.BOTH, expand=True)
+
+    def test(self):
+        testPic = test_pictures.picture1
+        self.transfer(testPic)        
+        pass
 
     def browseImage(self): # BROWSE AND LOAD IMAGE
         filename = tkFileDialog.askopenfilename(parent=self, title="CHOOSE IMG")
@@ -101,6 +110,10 @@ class EinkThingClient(tk.Frame):
     # http://www.st.com/content/ccc/resource/technical/document/application_note/51/86/6b/0b/3a/82/49/86/DM00117749.pdf/files/DM00117749.pdf/jcr:content/translations/en.DM00117749.pdf
     def compress(self, img): # COMPRESS WITH THE COMPRESSION SCHEME OF THE EINK DISPLAY
         byteArray = []
+        width = img.size[0]
+        height= img.size[1]
+        print width, height
+        sys.exit() # TODO
         origBytes = list(img.getdata())
         for pixIdx in range(0, len(origBytes), 8):
             byteArray.append(\
@@ -116,9 +129,12 @@ class EinkThingClient(tk.Frame):
         print "COMPRESSED SIZE", len(byteArray)
         return byteArray
 
-    def transfer(self): # TRANSFER IMAGE THROUGH UART
+    def transfer(self, byteArray=None): # TRANSFER IMAGE THROUGH UART
         #self.recreatedImage.save("/tmp/recreated.jpg")
-        self.compressedByteArray = self.compress(self.recreatedImage)
+        if byteArray == None:
+            self.compressedByteArray = self.compress(self.recreatedImage)
+        else:
+            self.compressedByteArray = byteArray
         #return
         port = serial.Serial(PORT, baudrate=BAUD, timeout=10, write_timeout=0)
         try:
@@ -140,7 +156,7 @@ class EinkThingClient(tk.Frame):
                 print "WRITING BYTES IDX:", bIdx+0, " ", bIdx+9, " ", payload
                 port.write(payload)
                 #time.sleep(5)
-                print bIdx+9, "/", len(self.compressedByteArray)
+                print bIdx, "/", len(self.compressedByteArray)
         except Exception:
             traceback.print_exc()
             print "ERROR TRANSFERING"

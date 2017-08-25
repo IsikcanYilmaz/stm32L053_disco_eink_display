@@ -50,6 +50,9 @@
 #include "stm32l0xx_hal.h"
 #include "cmsis_os.h"
 #include "Board_LED.h"
+//#include "stm32l0538_discovery.h"
+#include "stm32l0538_discovery_epd.h"
+//#include "stm32l0538_discovery_epd.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -115,6 +118,7 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 	LED_Initialize();
+  BSP_EPD_Init();
 	__HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
 	
 
@@ -290,6 +294,8 @@ void userButtonIsr(void){ // Button press isr callback
 	} else {
 		userButtonPressed = 1; // Rising edge detection
 	}
+  BSP_EPD_DisplayChar(10, 10, 'a');
+  //BSP_EPD_RefreshDisplay();
 }
 
 void usartIsr(void){
@@ -321,6 +327,8 @@ void StartDefaultTask(void const * argument)
   {
 		if (userButtonPressed){ 
 			LED_On(0);
+      BSP_EPD_RefreshDisplay();
+
 		} else { 
 			LED_Off(0);
 		}
@@ -328,24 +336,12 @@ void StartDefaultTask(void const * argument)
 		if (lastIndex == PICTURE_SIZE){
 			LED_On(1);
 			LED_On(0);
+      BSP_EPD_RefreshDisplay();
+      BSP_EPD_DrawImage(0, 0, 72, 172, (uint8_t*) picture);
+      BSP_EPD_RefreshDisplay();
 			while(1){}
 		}
-	/*	if (lastIndex == PICTURE_SIZE){
-			LED_On(1);
-			LED_On(2);
-			while(1){}
-		}
-		HAL_StatusTypeDef result = HAL_UART_Receive(&huart1, (uint8_t*)&test[lastIndex], 10, 10);
-		if (result == HAL_OK){
-			LED_Off(1);
-			LED_On(0);
-			lastIndex += 10;
-		} else {
-			LED_Off(0);
-			LED_On(1);
-		}
-		*/
-		//osDelay(1);
+
 		//while(userButtonPressed != 1){} // press
 		//while(userButtonPressed == 1){} // debounce
   }

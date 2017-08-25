@@ -48,3 +48,7 @@ eink_thing_attempt1\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/q
 eink_thing_attempt1\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 eink_thing_attempt1\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 eink_thing_attempt1\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.4.1\Board\Board_LED.h
+eink_thing_attempt1\main.o: ..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_discovery_epd.h
+eink_thing_attempt1\main.o: ..\Drivers\BSP\STM32L0538-Discovery\..\Components\gde021a1\gde021a1.h
+eink_thing_attempt1\main.o: ..\Drivers\BSP\STM32L0538-Discovery\..\Components\gde021a1\..\Common\epd.h
+eink_thing_attempt1\main.o: ..\Drivers\BSP\STM32L0538-Discovery\fontsepd.h
