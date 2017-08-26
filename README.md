@@ -8,4 +8,6 @@
 
 -Run ./eink_thing_client.py to start the client gui. use it to choose a picture, pick a decent black and white threshold via the slider, click transfer to send the converted/compressed image to the stm32 disco board. 
 
+-transfer done via uart.
+
 -neat little practice project.
