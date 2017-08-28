@@ -407,9 +407,9 @@ void HAL_SYSCFG_Disable_Lock_VREFINT(void);
 void HAL_SYSCFG_VREFINT_OutputSelect(uint32_t SYSCFG_Vrefint_OUTPUT);
 
 //JON
-void userButtonIsr(void);
 void usartIsr(void);
-
+void usartDmaIsr(void);
+void userButtonIsr(void);
 /**                  
   * @}
   */

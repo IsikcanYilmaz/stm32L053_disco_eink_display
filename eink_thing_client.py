@@ -12,7 +12,7 @@ from PIL import Image, ImageTk
 import Tkinter as tk
 
 BAUD=9600
-PORT="COM4"
+PORT="COM5"
 
 class EinkThingClient(tk.Frame):
     def __init__(self, parent):

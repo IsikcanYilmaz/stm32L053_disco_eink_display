@@ -49,17 +49,15 @@
 #include "main.h"
 #include "stm32l0xx_hal.h"
 #include "cmsis_os.h"
-#include "Board_LED.h"
-//#include "stm32l0538_discovery.h"
-#include "stm32l0538_discovery_epd.h"
-//#include "stm32l0538_discovery_epd.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "Board_LED.h"
+#include "stm32l0538_discovery_epd.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart1;
+DMA_HandleTypeDef hdma_usart1_rx;
 
 osThreadId defaultTaskHandle;
 
@@ -67,12 +65,14 @@ osThreadId defaultTaskHandle;
 /* Private variables ---------------------------------------------------------*/
 int userButtonPressed = 0;
 uint8_t picture[PICTURE_SIZE];
+uint8_t usartBuffer[8];
 uint16_t lastIndex = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void const * argument);
 static void MX_NVIC_Init(void);
@@ -111,6 +111,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART1_UART_Init();
 
   /* Initialize interrupts */
@@ -238,7 +239,6 @@ static void MX_NVIC_Init(void)
   /* EXTI0_1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(EXTI0_1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
-	
 }
 
 /* USART1 init function */
@@ -259,6 +259,21 @@ static void MX_USART1_UART_Init(void)
   {
     _Error_Handler(__FILE__, __LINE__);
   }
+
+}
+
+/** 
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void) 
+{
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel2_3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel2_3_IRQn, 3, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
 
 }
 
@@ -304,9 +319,15 @@ void usartIsr(void){
 	//HAL_StatusTypeDef uartResp = HAL_UART_Receive(&huart1, &picture[lastIndex], 1, HAL_UART_TIMEOUT_VALUE);
 	//lastIndex += 10;
 	LED_Off(1);
-	picture[lastIndex] = (uint8_t)(huart1.Instance->RDR & (uint8_t)0xff);
+	//picture[lastIndex] = (uint8_t)(huart1.Instance->RDR & (uint8_t)0xff);
+	//HAL_UART_Receive(&huart1, &usartBuffer[0], 8, 10);
 	lastIndex++;
-	__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
+	
+	//__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
+}
+
+void usartDmaIsr(void){
+	LED_On(1);
 }
 /* USER CODE END 4 */
 
@@ -325,6 +346,7 @@ void StartDefaultTask(void const * argument)
 	lastIndex = 0;
   for(;;)
   {
+		/*
 		if (userButtonPressed){ 
 			LED_On(0);
       BSP_EPD_RefreshDisplay();
@@ -341,9 +363,18 @@ void StartDefaultTask(void const * argument)
       BSP_EPD_RefreshDisplay();
 			while(1){}
 		}
-
+		*/
 		//while(userButtonPressed != 1){} // press
 		//while(userButtonPressed == 1){} // debounce
+		HAL_StatusTypeDef result = HAL_UART_Receive_DMA(&huart1, &usartBuffer[0], 8);
+		if (result == HAL_OK){
+			LED_On(1);
+			LED_Off(0);
+		} else {
+			LED_Off(1);
+			LED_On(0);
+		}
+
   }
   /* USER CODE END 5 */ 
 }
