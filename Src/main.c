@@ -53,6 +53,9 @@
 /* USER CODE BEGIN Includes */
 #include "Board_LED.h"
 #include "stm32l0538_discovery_epd.h"
+#include "string.h"
+
+#define USART_BUFFER_SIZE 8 // amount of bytes per transfer
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -64,8 +67,9 @@ osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 int userButtonPressed = 0;
+int rxDone = 0;
 uint8_t picture[PICTURE_SIZE];
-uint8_t usartBuffer[8];
+uint8_t usartBuffer[USART_BUFFER_SIZE];
 uint16_t lastIndex = 0;
 /* USER CODE END PV */
 
@@ -321,13 +325,20 @@ void usartIsr(void){
 	LED_Off(1);
 	//picture[lastIndex] = (uint8_t)(huart1.Instance->RDR & (uint8_t)0xff);
 	//HAL_UART_Receive(&huart1, &usartBuffer[0], 8, 10);
-	lastIndex++;
+	//lastIndex++;
 	
 	//__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
 }
 
 void usartDmaIsr(void){
-	LED_On(1);
+
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){ // overwriting weak. callback for when we receive 8 full bytes
+  LED_On(1);
+  rxDone = 1;
+  memcpy(&picture[lastIndex], usartBuffer, USART_BUFFER_SIZE);
+  lastIndex += 8;
 }
 /* USER CODE END 4 */
 
@@ -364,9 +375,9 @@ void StartDefaultTask(void const * argument)
 			while(1){}
 		}
 		*/
-		//while(userButtonPressed != 1){} // press
-		//while(userButtonPressed == 1){} // debounce
-		HAL_StatusTypeDef result = HAL_UART_Receive_DMA(&huart1, &usartBuffer[0], 8);
+
+    rxDone = 0;
+		HAL_StatusTypeDef result = HAL_UART_Receive_DMA(&huart1, &usartBuffer[0], USART_BUFFER_SIZE);
 		if (result == HAL_OK){
 			LED_On(1);
 			LED_Off(0);
@@ -374,7 +385,15 @@ void StartDefaultTask(void const * argument)
 			LED_Off(1);
 			LED_On(0);
 		}
-
+    while(rxDone == 0);
+    if (lastIndex >= PICTURE_SIZE){
+      LED_On(1);
+			LED_On(0);
+      BSP_EPD_RefreshDisplay();
+      BSP_EPD_DrawImage(0, 0, 72, 172, (uint8_t*) picture);
+      BSP_EPD_RefreshDisplay();
+			while(1){}
+    }
   }
   /* USER CODE END 5 */ 
 }

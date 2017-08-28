@@ -12,7 +12,8 @@ from PIL import Image, ImageTk
 import Tkinter as tk
 
 BAUD=9600
-PORT="COM5"
+PORT="COM4"
+BUFFER_SIZE=8
 
 class EinkThingClient(tk.Frame):
     def __init__(self, parent):
@@ -136,27 +137,16 @@ class EinkThingClient(tk.Frame):
         else:
             self.compressedByteArray = byteArray
         #return
-        port = serial.Serial(PORT, baudrate=BAUD, timeout=10, write_timeout=0)
+        port = serial.Serial(PORT, baudrate=BAUD, timeout=10, write_timeout=10)
         try:
             tkMessageBox.showinfo("do it", "Press the USER BUTTON on the stm disco")
-            for bIdx in range(0,len(self.compressedByteArray)):
-                b0 = self.compressedByteArray[bIdx+0]
-                #b1 = self.compressedByteArray[bIdx+1]
-                #b2 = self.compressedByteArray[bIdx+2]
-                #b3 = self.compressedByteArray[bIdx+3]
-                #b4 = self.compressedByteArray[bIdx+4]
-                #b5 = self.compressedByteArray[bIdx+5]
-                #b6 = self.compressedByteArray[bIdx+6]
-                #b7 = self.compressedByteArray[bIdx+7]
-                #b8 = self.compressedByteArray[bIdx+8]
-                #b9 = self.compressedByteArray[bIdx+9]
-                #payload = chr(b0)+chr(b1)+chr(b2)+chr(b3)+chr(b4)+\
-                #          chr(b5)+chr(b6)+chr(b7)+chr(b8)+chr(b9)
-                payload = chr(b0)
-                print "WRITING BYTES IDX:", bIdx+0, " ", bIdx+9, " ", payload
-                port.write(payload)
-                #time.sleep(5)
-                print bIdx, "/", len(self.compressedByteArray)
+            while len(self.compressedByteArray) % BUFFER_SIZE > 0:
+                self.compressedByteArray.append(0)
+            for bIdx in range(0,len(self.compressedByteArray),BUFFER_SIZE):
+                payload = self.strToBytes(self.compressedByteArray[bIdx:bIdx+BUFFER_SIZE])
+                port.write(bytes(payload))
+                port.write("\0")
+                print "WRITING BYTES IDX:", bIdx,"/", len(self.compressedByteArray), ''.join(format(x, '02x') for x in payload), len(payload)
         except Exception:
             traceback.print_exc()
             print "ERROR TRANSFERING"
@@ -164,6 +154,12 @@ class EinkThingClient(tk.Frame):
             port.close()
         print "TRANSFER"
 
+    def strToBytes(self, string):
+        payload = bytearray()
+        for char in string:
+            payload.append(char)
+        return payload
+            
     def thresholdChange(self, *args): # SLIDER SLIDED CALLBACK
         self.recreatedImage = self.convert(self.loadedImage)
         self.botCanvasPhoto = ImageTk.PhotoImage(self.recreatedImage)

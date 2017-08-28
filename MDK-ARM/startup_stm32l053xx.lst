@@ -394,9 +394,10 @@ K\ARM\CMSIS\5.1.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.4.1
 ARM Macro Assembler    Page 7 
 
 
-\Board -IDevice\Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SET
-A 1" --predefine="__UVISION_VERSION SETA 524" --predefine="_RTE_ SETA 1" --list
-=startup_stm32l053xx.lst startup_stm32l053xx.s
+\Board -IC:\Keil_v5\ARM\PACK\Keil\STM32L0xx_DFP\1.6.0\Device\Include --predefin
+e="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 524" --predefine="_RT
+E_ SETA 1" --predefine="STM32L053xx SETA 1" --list=startup_stm32l053xx.lst star
+tup_stm32l053xx.s
 
 
 

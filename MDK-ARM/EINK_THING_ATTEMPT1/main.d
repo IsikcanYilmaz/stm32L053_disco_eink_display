@@ -52,3 +52,4 @@ eink_thing_attempt1\main.o: ..\Drivers\BSP\STM32L0538-Discovery\stm32l0538_disco
 eink_thing_attempt1\main.o: ..\Drivers\BSP\STM32L0538-Discovery\..\Components\gde021a1\gde021a1.h
 eink_thing_attempt1\main.o: ..\Drivers\BSP\STM32L0538-Discovery\..\Components\gde021a1\..\Common\epd.h
 eink_thing_attempt1\main.o: ..\Drivers\BSP\STM32L0538-Discovery\fontsepd.h
+eink_thing_attempt1\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
