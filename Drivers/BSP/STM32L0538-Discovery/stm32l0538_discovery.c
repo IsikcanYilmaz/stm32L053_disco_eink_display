@@ -151,7 +151,7 @@ void BSP_LED_Init(Led_TypeDef Led)
   GPIO_InitTypeDef  GPIO_InitStruct;
 
   /* Enable the GPIO_LED Clock */
-  LEDx_GPIO_CLK_ENABLE(Led);
+  //LEDx_GPIO_CLK_ENABLE(Led);
 
   /* Configure the GPIO_LED pin */
   GPIO_InitStruct.Pin = GPIO_PIN[Led];
@@ -219,7 +219,7 @@ void BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef ButtonMode)
   GPIO_InitTypeDef GPIO_InitStruct;
   
   /* Enable the BUTTON Clock */
-  BUTTONx_GPIO_CLK_ENABLE(Button);
+  //BUTTONx_GPIO_CLK_ENABLE(Button);
   
   if (ButtonMode == BUTTON_MODE_GPIO)
   {

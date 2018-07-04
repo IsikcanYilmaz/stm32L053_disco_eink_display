@@ -385,19 +385,18 @@ ARM Macro Assembler    Page 6
               00000000 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0+ --apcs=inter
-work --depend=eink_thing_attempt1\startup_stm32l053xx.d -oeink_thing_attempt1\s
-tartup_stm32l053xx.o -I..\Inc -I.\RTE\_EINK_THING_ATTEMPT1 -IC:\Keil_v5\ARM\PAC
-K\ARM\CMSIS\5.1.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.4.1
+work --depend=eink_noos\startup_stm32l053xx.d -oeink_noos\startup_stm32l053xx.o
+ -I.\RTE\_eink_noOS -IC:\Keil_v5\ARM\PACK\Keil\STM32L0xx_DFP\2.0.0\Drivers\CMSI
+S\Device\ST\STM32L0xx\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__EVA
 
 
 
 ARM Macro Assembler    Page 7 
 
 
-\Board -IC:\Keil_v5\ARM\PACK\Keil\STM32L0xx_DFP\1.6.0\Device\Include --predefin
-e="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 524" --predefine="_RT
-E_ SETA 1" --predefine="STM32L053xx SETA 1" --list=startup_stm32l053xx.lst star
-tup_stm32l053xx.s
+L SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 5
+24" --predefine="STM32L053xx SETA 1" --list=startup_stm32l053xx.lst startup_stm
+32l053xx.s
 
 
 
