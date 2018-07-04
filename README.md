@@ -7,6 +7,4 @@ Done in the Keil IDE using the HAL libraries.
 
 Run the python program ./eink_thing_client.py for the photo conversion functionality. Browse for a jpg file, move the slider around to get a decent black and white threshold, click transfer to transfer the compressed picture to your STM32L053. 
 
-Transfer is done in UART. Bytes written via DMA to a buffer. Every time the buffer is full, an interrupt is fired, followed by the ISR putting the contents of the buffer to where we want em. 
-
 The result is something like what you see above; the picture of my face on the e-ink display. 
