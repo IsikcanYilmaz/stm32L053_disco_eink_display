@@ -1,7 +1,8 @@
+
 /**
   ******************************************************************************
-  * File Name          : main.c
-  * Description        : Main program body
+  * @file           : main.c
+  * @brief          : Main program body
   ******************************************************************************
   ** This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -9,7 +10,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2018 STMicroelectronics
+  * COPYRIGHT(c) 2019 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -56,7 +57,7 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 static volatile void (*stateFunction)(void);
-static volatile int breakout = FALSE; // break out of function during interrupt
+static volatile int breakout = false; // break out of function during interrupt
 static volatile HAL_StatusTypeDef result;
 /* USER CODE END PV */
 
@@ -73,22 +74,18 @@ void SystemClock_Config(void);
 static void update(void){
 	switch (STATE){
 		case WAITING_FOR_USART:
-			
-			
+	    result = HAL_UART_Receive_DMA(&huart1, &picture, PICTURE_SIZE);
 			if (workStarted){ // TRANSITION TO WORK
 				STATE = WORKING;
 				stateFunction = working_fn;
-				breakout = TRUE;
+				breakout = true;
 			}
 			break;
 		case WORKING:
-			if (lastIndex >= PICTURE_SIZE && rxStarted == FALSE){
-				rxDone = TRUE;
-			}
 			if (rxDone){ // TRANSITION TO DONE
 				STATE = DONE;
 				stateFunction = done_fn;
-				breakout = TRUE;
+				breakout = true;
 			}
 			break;
 			
@@ -103,7 +100,7 @@ void *waiting_for_usart_fn(void){
 	toggleRed();
 	for (i = 0; i < 50000; i++){
 		if (breakout){
-			breakout = FALSE;
+			breakout = false;
 			return NULL;
 		}
 	}
@@ -114,14 +111,14 @@ void *working_fn(void){
 	toggleRed();
 	for (i = 0; i < 10000; i++){
 		if (breakout){
-			breakout = FALSE;
+			breakout = false;
 			return NULL;
 		}
 	}
 	toggleGreen();
 	for (i = 0; i < 10000; i++){
 		if (breakout){
-			breakout = FALSE;
+			breakout = false;
 			return NULL;
 		}
 	}
@@ -130,7 +127,7 @@ void *working_fn(void){
 void *done_fn(void){
 	greenOn();
 	redOff();
-	BSP_EPD_RefreshDisplay();
+	//BSP_EPD_RefreshDisplay();
 	BSP_EPD_DrawImage(0, 0, 72, 172, (uint8_t*) picture);
 	BSP_EPD_RefreshDisplay();
 	for(;;);
@@ -143,18 +140,14 @@ void externalInterrupt(void){
 }
 
 void dmaInterrupt(void){
-	workStarted = TRUE;
-	rxStarted = 1 - rxStarted;
-	if(rxStarted){
-		lastIndex += USART_BUFFER_SIZE;
-	}
-	__HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
-
+  //rxDone = true;
+  done_fn();
+  while(1){}
 }
 
 void usartInterrupt(void){
-	__HAL_UART_DISABLE_IT(&huart1, UART_IT_RXNE);
-	result = HAL_UART_Receive_DMA(&huart1, &picture[lastIndex], USART_BUFFER_SIZE);
+	//__HAL_UART_DISABLE_IT(&huart1, UART_IT_RXNE);
+	//result = HAL_UART_Receive_DMA(&huart1, &picture[lastIndex], USART_BUFFER_SIZE);
 	if (result != HAL_OK){
 			
 	}
@@ -167,13 +160,17 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){ // overwriting weak. ca
 }
 /* USER CODE END 0 */
 
+/**
+  * @brief  The application entry point.
+  *
+  * @retval None
+  */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 	STATE = WAITING_FOR_USART;
-	usrButtonPressed = pressHold = FALSE;
-	rxDone = rxStarted = workStarted = FALSE;
+	usrButtonPressed = pressHold = false;
+	rxDone = rxStarted = workStarted = false;
 	stateFunction = waiting_for_usart_fn;
 	
   /* USER CODE END 1 */
@@ -201,12 +198,11 @@ int main(void)
   MX_TIM21_Init();
   MX_I2C1_Init();
   MX_SPI1_Init();
-
   /* USER CODE BEGIN 2 */
 	BSP_EPD_Init();
 	//BSP_EPD_RefreshDisplay();
-	__HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
-	//__HAL_DMA_ENABLE_IT(&hdma_usart1_rx, DMA_IT_TC);
+	//__HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
+	__HAL_DMA_ENABLE_IT(&hdma_usart1_rx, DMA_IT_TC);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -225,8 +221,10 @@ int main(void)
 
 }
 
-/** System Clock Configuration
-*/
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
 
@@ -290,45 +288,43 @@ void SystemClock_Config(void)
 
 /**
   * @brief  This function is executed in case of error occurrence.
-  * @param  None
+  * @param  file: The file name as string.
+  * @param  line: The line in file as a number.
   * @retval None
   */
-void _Error_Handler(char * file, int line)
+void _Error_Handler(char *file, int line)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   while(1) 
   {
   }
-  /* USER CODE END Error_Handler_Debug */ 
+  /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
-
+#ifdef  USE_FULL_ASSERT
 /**
-   * @brief Reports the name of the source file and the source line number
-   * where the assert_param error has occurred.
-   * @param file: pointer to the source file name
-   * @param line: assert_param error line source number
-   * @retval None
-   */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t* file, uint32_t line)
-{
+{ 
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
-
 }
-
-#endif
-
-/**
-  * @}
-  */ 
+#endif /* USE_FULL_ASSERT */
 
 /**
   * @}
-*/ 
+  */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

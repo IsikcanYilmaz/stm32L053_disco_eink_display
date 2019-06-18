@@ -12,7 +12,8 @@ from PIL import Image, ImageTk
 import Tkinter as tk
 
 BAUD=9600
-PORT="COM5"
+#PORT="COM5"
+PORT="/dev/ttyACM0"
 BUFFER_SIZE=8
 
 class EinkThingClient(tk.Frame):
@@ -66,7 +67,12 @@ class EinkThingClient(tk.Frame):
 
     def test(self):
         testPic = test_pictures.picture1
-        self.transfer(testPic)        
+        SEND_FS = True
+        if (SEND_FS):
+            pl = range(0,16)
+            self.transfer(pl)
+            return
+        self.transfer(testPic)
         pass
 
     def browseImage(self): # BROWSE AND LOAD IMAGE
@@ -138,14 +144,19 @@ class EinkThingClient(tk.Frame):
             self.compressedByteArray = byteArray
         #return
         port = serial.Serial(PORT, baudrate=BAUD, timeout=10, write_timeout=10)
+        ALL_IN_ONE_GO = True
+        if ALL_IN_ONE_GO:
+            port.write(self.compressedByteArray)
+            print "TRANSFER COMPLETE"
+            return
         try:
             while len(self.compressedByteArray) % BUFFER_SIZE > 0:
                 self.compressedByteArray.append(0)
             for bIdx in range(0,len(self.compressedByteArray),BUFFER_SIZE):
                 payload = self.strToBytes(self.compressedByteArray[bIdx:bIdx+BUFFER_SIZE])
                 port.write(bytes(payload))
-                port.write("\0")
-                time.sleep(0.01)
+                #port.write("\0")
+                #time.sleep(0.01)
                 print "WRITING BYTES IDX:", bIdx,"/", len(self.compressedByteArray), ''.join(format(x, '02x') for x in payload), len(payload)
         except Exception:
             traceback.print_exc()
@@ -159,7 +170,7 @@ class EinkThingClient(tk.Frame):
         for char in string:
             payload.append(char)
         return payload
-            
+
     def thresholdChange(self, *args): # SLIDER SLIDED CALLBACK
         self.recreatedImage = self.convert(self.loadedImage)
         self.botCanvasPhoto = ImageTk.PhotoImage(self.recreatedImage)

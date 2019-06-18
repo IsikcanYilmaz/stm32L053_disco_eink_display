@@ -1,16 +1,14 @@
 /**
   ******************************************************************************
-  * File Name          : SPI.h
-  * Description        : This file provides code for the configuration
-  *                      of the SPI instances.
+  * @file    fontsepd.h
+  * @author  MCD Application Team
+  * @version V1.0.0
+  * @date    18-June-2014
+  * @brief   Header for fonts files
   ******************************************************************************
-  ** This notice applies to any and all portions of this file
-  * that are not between comment pairs USER CODE BEGIN and
-  * USER CODE END. Other portions of this file, whether 
-  * inserted by the user or by software development tools
-  * are owned by their respective copyright owners.
+  * @attention
   *
-  * COPYRIGHT(c) 2019 STMicroelectronics
+  * <h2><center>&copy; COPYRIGHT(c) 2014 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -36,39 +34,85 @@
   *
   ******************************************************************************
   */
+
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __spi_H
-#define __spi_H
+#ifndef __FONTSEPD_H
+#define __FONTSEPD_H
+
 #ifdef __cplusplus
  extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx_hal.h"
-#include "main.h"
+#include <stdint.h>
 
-/* USER CODE BEGIN Includes */
+/** @addtogroup BSP
+  * @{
+  */
 
-/* USER CODE END Includes */
+/** @addtogroup STM32L0538_DISCOVERY
+  * @{
+  */
 
-extern SPI_HandleTypeDef hspi1;
+/** @addtogroup FONTS
+  * @{
+  */ 
 
-/* USER CODE BEGIN Private defines */
+/** @defgroup FONTS_Exported_Types
+  * @{
+  */ 
+typedef struct _tFont
+{    
+  const uint8_t *table;
+  uint16_t Width;
+  uint16_t Height;
+  
+} sFONT;
 
-/* USER CODE END Private defines */
+extern sFONT Font20;
+extern sFONT Font16;
+extern sFONT Font12;
+extern sFONT Font8;
+/**
+  * @}
+  */ 
 
-extern void _Error_Handler(char *, int);
+/** @defgroup FONTS_Exported_Constants
+  * @{
+  */ 
+#define LINE(x) ((x) * (((sFONT *)BSP_EPD_GetFont())->Height))
 
-void MX_SPI1_Init(void);
+/**
+  * @}
+  */ 
 
-/* USER CODE BEGIN Prototypes */
+/** @defgroup FONTS_Exported_Macros
+  * @{
+  */ 
+/**
+  * @}
+  */ 
 
-/* USER CODE END Prototypes */
+/** @defgroup FONTS_Exported_Functions
+  * @{
+  */ 
+/**
+  * @}
+  */
 
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ spi_H */
+  
+#endif /* __FONTSEPD_H */
+ 
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */ 
 
 /**
   * @}
@@ -76,6 +120,6 @@ void MX_SPI1_Init(void);
 
 /**
   * @}
-  */
+  */    
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
