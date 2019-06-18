@@ -148,6 +148,7 @@ class EinkThingClient(tk.Frame):
         if ALL_IN_ONE_GO:
             port.write(self.compressedByteArray)
             print "TRANSFER COMPLETE"
+            port.close()
             return
         try:
             while len(self.compressedByteArray) % BUFFER_SIZE > 0:
