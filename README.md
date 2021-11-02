@@ -1,4 +1,4 @@
-# stm32l053_disco_eink_display
+# stm32L053_disco_eink_display
 ![alt text](https://github.com/IsikcanYilmaz/stm32l053_disco_eink_display_practice/blob/master/20170826_104507.jpg)
 
 This is the first thing I did for the STM32L053 Discovery Dev board that I got my hands on recently. 
